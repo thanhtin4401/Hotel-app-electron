@@ -1,13 +1,36 @@
 import React from "react";
 import "./LoginPage.scss";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, Select, message } from "antd";
 import { useNavigate } from "react-router-dom";
+import { httpsKLTN } from "../../service/axiosAPI";
+import { localStorageService } from "../../service/localStorageService";
+import { authService } from "../../service/authService";
 function LoginPage() {
   const navigate = useNavigate();
   const onFinish = (values) => {
-    // dispatch(loginUser(values));
-    // dispatch(on_loading(12));
-    navigate("Manager");
+    authService
+      .login(values)
+      .then((res) => {
+        localStorageService.set("accessToken", res.data.accessToken);
+
+        localStorageService.set("USER", res.data);
+        message.success("login success");
+        navigate("/manager");
+      })
+      .catch((err) => {
+        message.error("wrong account or password");
+      });
+    // try {
+    //   const res = httpsKLTN.post("/api/taikhoan/login", values);
+    //   localStorageService.set("accessToken", res.data.accessToken);
+
+    //   localStorageService.set("USER", res.data);
+    //   message.success("login success");
+    //   navigate("/manager");
+    // } catch (error) {
+    //   message.error("error.response.data");
+    // }
+    // navigate("Manager");
   };
   const onFinishFailed = (errorInfo) => {};
   return (

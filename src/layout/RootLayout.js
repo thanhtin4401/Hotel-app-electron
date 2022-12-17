@@ -15,6 +15,7 @@ import { logoutUser } from "../redux/auth/authSlice";
 import { localStorageService } from "../service/localStorageService";
 export default function RootLayout() {
   const [isOpenSidebar, setisOpenSidebar] = useState(false);
+
   const [isOpenMenuProfile, setisOpenMenuProfile] = useState(false);
   const [isOpenSidebarMb, setisOpenSidebarMb] = useState(false);
   const isfetching = useSelector((state) => state.auth.isfetching);
@@ -31,10 +32,10 @@ export default function RootLayout() {
   };
   const navigate = useNavigate();
   const handleLogout = () => {
-    dispatch(logoutUser());
+    // dispatch(logoutUser());
     localStorageService.remove("USER");
     localStorageService.remove("accessToken");
-    navigate("/login");
+    navigate("/");
   };
   const { t } = useTranslation();
   const location = useLocation();

@@ -11,6 +11,7 @@ function App() {
       {/* <RootLayout /> */}
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<LoginPage />}></Route>
           <Route path="/manager" element={<RootLayout />}>
             <Route path="promotion" element={<ListPromotionPage />} />
           </Route>
